@@ -1,0 +1,80 @@
+using System;
+using System.Collections.Generic;
+
+public class Hamburguesa
+{
+    public string TipoPan { get; set; }
+    public string TipoCarne { get; set; }
+    public decimal PrecioBase { get; set; }
+    public List<string> Ingredientes { get; set; }
+    private List<string> ingredientesAdicionales = new List<string>();
+    private double precioBase;
+
+
+    public Hamburguesa(string tipoPan, string tipoCarne, decimal precioBase)
+    {
+        TipoPan = tipoPan;
+        TipoCarne = tipoCarne;
+        PrecioBase = precioBase;
+        Ingredientes = new List<string>();
+    }
+    public void MostrarPrecio()
+    {
+        decimal precioTotal = PrecioBase;
+
+        Console.WriteLine("Hamburguesa: " + TipoPan + " " + TipoCarne);
+        Console.WriteLine("Precio base: " + PrecioBase);
+
+        foreach (string ingrediente in Ingredientes)
+        {
+            precioTotal += 0.5m;
+            Console.WriteLine(" + " + ingrediente + " (0.5)");
+        }
+
+        Console.WriteLine("Total: " + precioTotal);
+    }
+    public class HamburguesaSaludable : Hamburguesa
+    {
+        public HamburguesaSaludable(string tipoPan, string tipoCarne, decimal precioBase)
+            : base(tipoPan, tipoCarne, precioBase)
+        {
+        }
+
+        public void AgregarIngrediente(string ingrediente)
+        {
+            if (Ingredientes.Count < 6)
+            {
+                Ingredientes.Add(ingrediente);
+            }
+            else
+            {
+                Console.WriteLine("No se pueden agregar más ingredientes a esta hamburguesa.");
+            }
+        }
+    }
+
+    public class HamburguesaPremium : Hamburguesa
+    {
+        public HamburguesaPremium(string tipoPan, string tipoCarne, decimal precioBase)
+            : base(tipoPan, tipoCarne, precioBase)
+        {
+            Ingredientes.Add("Papitas");
+            Ingredientes.Add("Bebida");
+        }
+
+        public void AgregarIngrediente(string ingrediente, double precioAdicional)
+        {
+            if (ingredientesAdicionales.Count < 4)
+            {
+                ingredientesAdicionales.Add(ingrediente);
+                precioBase += precioAdicional;
+            }
+            else
+            {
+                Console.WriteLine("No se puede agregar más ingredientes a esta hamburguesa.");
+            }
+        }
+    }
+
+
+}
